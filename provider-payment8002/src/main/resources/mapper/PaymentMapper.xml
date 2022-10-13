@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springcloud.dao.PaymentDao">
+    <!-- id是dao中的方法名，parameterType表示输入的参数类型(方法中的参数类型)，
+         parameterType参数类型如果是实体类可以写全实体类所在的包直到实体类也可以只写实体类（eg:Payment）
+         useGeneratedKeys表示在执行添加记录之后可以获取到数据库自动生成的主键ID，
+         keyProperty表示设置主键，对应的值是实体类的属性，而不是数据库的字段。
+     -->
+    <insert id="create" parameterType="com.example.springcloud.entities.Payment" useGeneratedKeys="true" keyProperty="id">
+        insert into payment(serial) values (#{serial});
+    </insert>
+    <!-- resultMap="BaseResultMap"表示mybatis会根据查询到的条目数量自动进行判断，
+         如果是一条就返回对象，如果是多条就返回List对象列表。
+         利用resultMap标签自动编写规则，其中id就是BaseResultMap，与属性相对应。
+    -->
+    <select id="getPaymentById" parameterType="Long" resultMap="BaseResultMap">
+        select * from payment where id = #{id};
+    </select>
+    <!-- resultMap中的id与上面对应，type与实体类映射 -->
+    <resultMap id="BaseResultMap" type="com.example.springcloud.entities.Payment">
+        <!-- column为数据库的属性，property为Java中的属性，jdbcType为数据库属性的类型，javaType为Java中的属性类型 -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="serial" property="serial" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

@@ -15,7 +15,10 @@ import javax.annotation.Resource;
 public class OrderController {
 
     //定义需要调用的地址8001
-    public static final String PAYMENT_URL = "http://localhost:8001";
+    // 单机版
+    //public static final String PAYMENT_URL = "http://localhost:8001";
+    // 集群版，通过在eureka上注册过的微服务名称调用(通过在物业公司注册的公司名称查找)
+    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
 
     @Resource//注入
     private RestTemplate restTemplate;

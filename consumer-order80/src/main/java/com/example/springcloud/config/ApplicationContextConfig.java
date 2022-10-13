@@ -1,5 +1,6 @@
 package com.example.springcloud.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -7,6 +8,15 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ApplicationContextConfig {
     @Bean//用注解的方式实现spring中的依赖注入
+    @LoadBalanced//集群版需加入，赋予RestTemplate负载均衡的能力
+    /**
+     * @LoadBalanced:一个服务做了集群之后如果不加这个注解可能会找不到哪一个服务(server.port)给我运行，
+     * 所以必须加这个注解让我的服务具有负载均衡的能力，能在调用其他微服务的时候，
+     * 通过服务实例名称就能进行调用其他的微服务，而不是直接把要调用的微服务的ip和端口号写死在controller代码当中。
+     * 这里要声明一下：默认的负载均衡的机制是轮询就是一个服务一次轮着来；
+     * 首先：这个@LoadBalanced注解是来自cloud包下的一个注解，这个注解就是让某一个东西拥有负载均衡的能力。
+     * 这里就是让这个RestTemplate在请求时拥有客户端负载均衡的能力 ：RestTemplate 这个可以理解成为客服端。
+     */
     public RestTemplate getRestTemplate(){
         return new RestTemplate();
     }
