@@ -6,9 +6,12 @@ import com.example.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @Slf4j//打印日志
@@ -28,6 +31,30 @@ public class PaymentController {
      */
     @Value("${server.port}")//读取到yml文件中的server.port，即8001
     private String serverPort;//配置找到具体的端口号
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+    //对于注册进eureka里面的微服务，可以通过服务发现来获得该微服务的信息
+
+    //运行：http://localhost:8001/payment/discovery运行discovery()方法
+    @GetMapping(value = "/payment/discovery")
+    public Object discovery(){
+        List<String> services = discoveryClient.getServices();
+        //通过getServices()方法，获取到已经注册到Eureka中的服务名
+        for (String element : services){
+            log.info("********element:"+element);
+            //********element:cloud-payment-service
+            //********element:cloud-order-service
+        }
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance instance : instances){
+            log.info(instance.getServiceId()+"\t"+instance.getHost()+"\t"+instance.getPort()+"\t"+instance.getUri());
+            //CLOUD-PAYMENT-SERVICE	192.168.209.185	8002	http://192.168.209.185:8002
+            //CLOUD-PAYMENT-SERVICE	192.168.209.185	8001	http://192.168.209.185:8001
+        }
+        return discoveryClient;
+        //{"services":["cloud-payment-service","cloud-order-service"],"order":0}
+    }
 
     @PostMapping(value = "/payment/create")//一般的浏览器不太支持post请求，可以用postman进行模拟post请求
     public CommonResult create(@RequestBody Payment payment){
