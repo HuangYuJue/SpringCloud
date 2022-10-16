@@ -56,7 +56,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
-        <!--entity模块-->
+        <!--entity模块api-->
         <dependency>
             <groupId>org.example.springcloud</groupId>
             <artifactId>api-commons</artifactId>
