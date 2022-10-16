@@ -1,0 +1,13 @@
+#服务端口号
+server:
+  port: 80
+
+#服务注册名
+spring:
+  application:
+    name: cloud-consumer-order
+  #注册到zookeeper地址
+  cloud:
+    zookeeper:
+      connect-string: 192.168.244.52:2181 #192.168.244.52由xshell中 ifconfig -a 可得
+      #2181是zookeeper默认端口号
