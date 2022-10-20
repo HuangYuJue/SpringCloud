@@ -21,3 +21,5 @@ eureka:
     enable-self-preservation: false
     #2毫秒之后剔除
     eviction-interval-timer-in-ms: 2000
+    #设置读超时时间
+    peer-node-read-timeout-ms: 300

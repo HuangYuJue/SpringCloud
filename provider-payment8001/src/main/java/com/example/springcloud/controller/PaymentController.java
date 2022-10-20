@@ -55,6 +55,19 @@ public class PaymentController {
         return discoveryClient;
         //{"services":["cloud-payment-service","cloud-order-service"],"order":0}
     }
+    /**
+     * 负载均衡算法：rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标；每次服务重启后rest接口计数从1开始。
+     * 规定负载均衡的方式是在消费者中自定义的 MySelfRule 类中，而不在提供者中。
+     * (MySelfRule不能在springcloud包中，因为默认扫描会扫描整个springcloud包，而MySelfRule不能被@SpringBootApplication中的@ComponentScan扫描)
+     * List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+     * 上一行是在提供者的controller中，而不再消费者的controller中。
+     * 如：List[0] instances = 127.0.0.1:8002     List[1] instances = 127.0.0.1:8001
+     *    8001 + 8002 组合成为集群，它们共计2台机器，集群总数为2，按照轮询算法原理：
+     *    当总请求数为1时：1 % 2 = 1对应下标位置为1，则获得服务地址为127.0.0.1:8001（list.get(index)）
+     *    当总请求数为2时：2 % 2 = 0对应下标位置为0，则获得服务地址为127.0.0.1:8002（list.get(index)）
+     *    当总请求数为3时：3 % 2 = 1对应下标位置为1，则获得服务地址为127.0.0.1:8001（list.get(index)）
+     *    当总请求数为4时：4 % 2 = 0对应下标位置为0，则获得服务地址为127.0.0.1:8002（list.get(index)）  ....
+     */
 
     @PostMapping(value = "/payment/create")//一般的浏览器不太支持post请求，可以用postman进行模拟post请求
     public CommonResult create(@RequestBody Payment payment){
@@ -90,5 +103,11 @@ public class PaymentController {
         }else {
             return new CommonResult(444,"没有对应的记录，查询的id是："+id,null);
         }
+    }
+
+    //返回端口号
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        return serverPort;//8001
     }
 }

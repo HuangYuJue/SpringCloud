@@ -90,4 +90,10 @@ public class PaymentController {
             return new CommonResult(444,"没有对应的记录，查询的id是："+id,null);
         }
     }
+
+    //返回端口号
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        return serverPort;//8002
+    }
 }

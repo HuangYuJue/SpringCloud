@@ -8,7 +8,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ApplicationContextConfig {
     @Bean//用注解的方式实现spring中的依赖注入
-    @LoadBalanced//集群版需加入，赋予RestTemplate负载均衡的能力
+    //如果自定义LoadBalancer负载均衡算法，则需要注释掉
+    //@LoadBalanced//集群版需加入，赋予RestTemplate负载均衡的能力
     /**
      * @LoadBalanced:一个服务做了集群之后如果不加这个注解可能会找不到哪一个服务(server.port)给我运行，
      * 所以必须加这个注解让我的服务具有负载均衡的能力，能在调用其他微服务的时候，

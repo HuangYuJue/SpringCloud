@@ -1,15 +1,18 @@
 package com.example.springcloud.controller;
-
 import com.example.springcloud.entities.CommonResult;
 import com.example.springcloud.entities.Payment;
+import com.example.springcloud.lb.LoadBalancer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.Resource;
+import java.net.URI;
+import java.util.List;
 
 // Ribbon = 负载均衡 + RestTemplate
 @RestController
@@ -24,6 +27,28 @@ public class OrderController {
 
     @Resource//注入
     private RestTemplate restTemplate;
+
+    @Resource//注入手写的负载均衡算法
+    private LoadBalancer loadBalancer;
+    @Resource//引入发现
+    private DiscoveryClient discoveryClient;
+
+    @GetMapping("/consumer/payment/lb")
+    public String getPaymentLB(){
+        //获取服务实例的list(有几个提供者)
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        if (instances == null || instances.size() <= 0){
+            return null;
+        }
+        //否则则根据手写的负载均衡算法返回的服务实例来获取服务
+        //调用LoadBalancer接口中的方法返回具体的实例对象
+        ServiceInstance serviceInstance = loadBalancer.instances(instances);
+        //根据返回的实例对象获取到uri
+        URI uri = serviceInstance.getUri();
+        System.out.println(uri);//http://192.168.209.185:8001或者http://192.168.209.185:8001
+        //因为用定义的PAYMENT_URL时是用了配置类的@LoadBalanced负载均衡，这里是手动的负载均衡
+        return restTemplate.getForObject(uri+"/payment/lb",String.class);
+    }
 
     //因为是客户端，所以一般发的都是get请求
     @GetMapping(value = "/consumer/payment/create")
