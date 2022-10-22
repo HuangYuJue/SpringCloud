@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @Slf4j//打印日志
@@ -110,4 +111,17 @@ public class PaymentController {
     public String getPaymentLB(){
         return serverPort;//8001
     }
+
+    //服务提供方provider故意写暂停程序(即耗时将超过3秒钟)
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeOut(){
+        //暂停几秒钟线程
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        return serverPort;
+    }
+
 }
