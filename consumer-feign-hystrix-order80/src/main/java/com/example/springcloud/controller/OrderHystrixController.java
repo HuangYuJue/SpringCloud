@@ -1,6 +1,8 @@
 package com.example.springcloud.controller;
 
 import com.example.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +23,25 @@ public class OrderHystrixController {
         return result;
     }
 
-    //模拟睡眠3秒钟之后访问
+    //消费者端服务降级(注意：此时支付端没有服务降级，在规定时间内访问成功)
+    /*
+    服务降级provider端fallback：
+        @HystrixCommand注解是方法级别的，在需要捕获的方法上加上注解：
+        fallbackMethod：标记的是捕获异常时需要执行的方法，方法名称跟value值要一样，
+        表示如果paymentInfo_TimeOut方法出事了，由paymentInfo_TimeOutHandler方法给他兜底。
+        commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1500")}
+        表示timeoutInMilliseconds线程的超时时间是1500(1.5秒钟)，超过1.5秒钟则服务降级，调用备选兜底方法。
+     */
+    @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandler",commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1500")
+    })
     @GetMapping("/consumer/payment/hystrix/timeout/{id}")
     public String paymentInfo_TimeOut(@PathVariable("id") Integer id){
         String result = paymentHystrixService.paymentInfo_TimeOut(id);
         return result;
+    }
+    public String paymentInfo_TimeOutHandler(Integer id){
+        return "我是消费者80，对方支付系统繁忙请在10秒钟后再试或者自己运行出错检查自己，~^~";
     }
 }

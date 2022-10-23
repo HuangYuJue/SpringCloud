@@ -26,19 +26,19 @@ public class PaymentServiceImpl implements PaymentService {
         表示timeoutInMilliseconds线程的超时时间是3000(3秒钟)，超过3秒钟则服务降级，调用备选兜底方法。
      */
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandler",commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000")
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "5000")
     })
     public String paymentInfo_TimeOut(Integer id){
-        //暂停5秒钟线程(超时异常)
-        int timeNumber = 5;
-        /*try {
+        //暂停3秒钟线程(超时异常)
+        int timeNumber = 3;
+        try {
             TimeUnit.SECONDS.sleep(timeNumber);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         //运行报错(运行异常)
-        int age = 10/0;
+        //int age = 10/0;
         return "线程池： "+Thread.currentThread().getName()+" paymentInfo_TimeOut,id:  "+id+"\t"+"ovo"+"  耗时(秒): "+timeNumber;
         //线程池： http-nio-8001-exec-4 paymentInfo_TimeOut,id: 6 ovo 耗时(秒): 3
     }
