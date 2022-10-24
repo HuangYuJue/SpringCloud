@@ -21,6 +21,7 @@
     <module>consumer-feign-order80</module>
     <module>provider-hystrix-payment8001</module>
     <module>consumer-feign-hystrix-order80</module>
+    <module>consumer-hystrix-dashboard9002</module>
   </modules>
 
   <packaging>pom</packaging>
