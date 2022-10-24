@@ -34,4 +34,17 @@ public class PaymentController {
         //******result: 线程池： http-nio-8001-exec-4 paymentInfo_TimeOut,id:  6	ovo  耗时(秒): 3
         return result;//线程池： http-nio-8001-exec-4 paymentInfo_TimeOut,id: 6 ovo 耗时(秒): 3
     }
+
+    //=============以下是服务熔断，以上是服务降级=============//
+    @GetMapping("/payment/circuit/{id}")
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id){
+        String result = paymentService.paymentCircuitBreaker(id);
+        log.info("******result: "+result);
+        //******result: hystrix-PaymentServiceImpl-1	调用成功，流水号：685f08263a504a138d9b0d6217ae765e
+        //******result: id 不能负数，请稍后再试，~_~ id: -8
+        return result;
+        //hystrix-PaymentServiceImpl-1 调用成功，流水号：685f08263a504a138d9b0d6217ae765e
+        //id 不能负数，请稍后再试，~_~ id: -8
+    }
+
 }
