@@ -13,8 +13,9 @@ spring:
           #搜索目录
           search-paths:
             - springcloud-config
-          #跳过SSL校验，不然报https://github.com/HuangYuJue/springcloud-config.git: cannot open git-upload-pack
+          #跳过SSL校验
           skip-ssl-validation: true
+          #并且在git.bash中输入git config --global http.sslVerify false：不然报https://github.com/HuangYuJue/springcloud-config.git: cannot open git-upload-pack
       #读取分支，即分支的名字
       label: master
       #配置读取规则：
