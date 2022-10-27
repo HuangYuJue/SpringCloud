@@ -23,6 +23,7 @@
     <module>consumer-feign-hystrix-order80</module>
     <module>consumer-hystrix-dashboard9002</module>
       <module>gateway-gateway9527</module>
+      <module>config-center3344</module>
   </modules>
 
   <packaging>pom</packaging>
