@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>config-center3344</artifactId>
+    <artifactId>config-client3366</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -18,16 +18,16 @@
 
     <dependencies>
 
-        <!-- config-server config配置总控中心，表示是config的服务端server -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
-        </dependency>
-
-        <!-- 添加消息总线RabbitMQ支持 -->
+        <!-- 添加消息总线rabbitmq支持 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+
+        <!-- config表示config配置的客户端，并非总控中心 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
         <!-- eureka-client，表示是eureka中的provider提供者(申请入驻的公司，需要交物业费) -->
@@ -50,7 +50,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- 添加rabbitMq后需要监控依赖 -->
+        <!-- 引入actuator监控 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

@@ -10,6 +10,8 @@ spring:
         git:
           #GitHub上面的git仓库名字
           uri: https://github.com/HuangYuJue/springcloud-config.git
+          username: HuangYuJue
+          password: bevj3vpicj4cvt2
           #搜索目录
           search-paths:
             - springcloud-config
@@ -24,9 +26,22 @@ spring:
       # 以 application-{profile}.yml 加以区分，例如application-dev.yml、application-sit.yml、application-prod.yml
       #·{label} 表示git分支，默认是master分支，如果项目是以分支做区分也是可以的，那就可以通过不同的 label 来控制访问不同的配置文件了
 
+  ##rabbitmq相关配置
+  rabbitmq:
+    host: localhost
+    port: 5672  #15672是rabbitmq的web管理页面的端口，5672才是rabbitmq的默认服务端口(访问的端口)
+    username: guest
+    password: guest
 
 #服务注册到eureka地址
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka
+
+##rabbitmq相关配置，暴露bus刷新配置的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "bus-refresh"

@@ -2,7 +2,7 @@
 ### bootstrap.yml是系统级的，优先级更高
 
 server:
-  port: 3355
+  port: 3366
 
 spring:
   application:
@@ -16,7 +16,6 @@ spring:
       #上述3个综合：master分支上会读取config-dev.yml的配置文件被读取：http://config-3344.com:3344/master/config-dev.yml
       uri: http://localhost:3344  #配置中心地址
       #uri配置中心地址即不用去找GitHub中的仓库，只需要通过3344就能得到GitHub中对应仓库里master分支上的config-dev.yml文件
-    ##rabbitmq相关配置
   rabbitmq:
     host: localhost
     port: 5672  #15672是rabbitmq的web管理页面的端口，5672才是rabbitmq的默认服务端口(访问的端口)
