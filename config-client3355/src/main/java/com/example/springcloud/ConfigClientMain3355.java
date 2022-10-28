@@ -13,7 +13,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 curl -X POST "http://localhost:3355/actuator/refresh"，
 即可通过地址刷新得到修改后的内容。
  */
-@RefreshScope   //实例热加载，实现刷新功能
 @SpringBootApplication
 @EnableEurekaClient
 public class ConfigClientMain3355 {

@@ -1,11 +1,13 @@
 package com.example.springcloud.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 //注意：使用了controller，表示是一个web项目，所以需要在pom文件中加web依赖。
 @RestController
+@RefreshScope   //实例热加载，实现刷新功能
 public class ConfigClientController {
 
     @Value("${config.info}")
