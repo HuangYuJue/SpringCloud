@@ -24,7 +24,7 @@ spring:
           binder: defaultRabbit #设置要绑定的消息服务的具体设置
           #自定义分组名，因为不定义的话，分组名是默认的流水号分组名，长且复杂无规律
           #group: consumerA
-          group: consumer #分为同一个组名，为同一个组
+          #group: consumer #分为同一个组名，为同一个组
 
 eureka:
   client: #客户端进行Eureka注册的配置
