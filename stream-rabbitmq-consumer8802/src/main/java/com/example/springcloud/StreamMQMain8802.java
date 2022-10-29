@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * stream-rabbitmq-provider8801为消息的发送模块；
  * stream-rabbitmq-consumer8802以及stream-rabbitmq-consumer8803为消息的接收模块。
  */
+//点击rabbitmq中Exchanges下的studyExchange，再点击Bindings里可以查看到绑定到了目标
 @SpringBootApplication
 public class StreamMQMain8802 {
     public static void main(String[] args) {
