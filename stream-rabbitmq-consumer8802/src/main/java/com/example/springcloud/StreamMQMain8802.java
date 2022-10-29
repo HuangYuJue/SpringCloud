@@ -1,4 +1,4 @@
-package com.example.springcoud;
+package com.example.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * stream-rabbitmq-consumer8802以及stream-rabbitmq-consumer8803为消息的接收模块。
  */
 @SpringBootApplication
-public class StreamMQMain8801 {
+public class StreamMQMain8802 {
     public static void main(String[] args) {
-        SpringApplication.run(StreamMQMain8801.class,args);
+        SpringApplication.run(StreamMQMain8802.class,args);
     }
 }
