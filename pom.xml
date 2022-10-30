@@ -31,6 +31,7 @@
     <module>stream-rabbitmq-consumer8803</module>
     <module>alibaba-provider-payment6001</module>
       <module>alibaba-provider-payment6002</module>
+      <module>alibaba-consumer-nacos-order83</module>
   </modules>
 
   <packaging>pom</packaging>
