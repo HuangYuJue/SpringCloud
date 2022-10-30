@@ -16,6 +16,13 @@
 
     <dependencies>
 
+        <!-- 包含了sleuth+zipkin，Sleuth链路监控展现，结合zipkin的jar包使用 -->
+        <!-- zipkin的使用：在有zipkin的jar包的目录下运行cmd，输入java -jar zipkin-server-2.23.9-exec.jar，后访问http://localhost:9411/zipkin/或http://localhost:9411 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!-- eureka-client，表示入驻微服务 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

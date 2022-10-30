@@ -7,6 +7,14 @@ spring:
   application:
     name: cloud-payment-service
 
+  zipkin:
+    #表示监控的数值和图表是要打在http://localhost:9411上让别人看的到，相当于注册要注册进eureka上面告诉eureka的地址是7001
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样率值介于0到1之间，1则表示全部采集
+      probability: 1
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource  #当前数据源操作类型
     driver-class-name: org.gjt.mm.mysql.Driver  #mysql驱动包

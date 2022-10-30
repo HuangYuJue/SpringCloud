@@ -93,4 +93,16 @@ public class OrderController {
     /*
     IRule：根据特定算法中从服务列表中选取一个要访问的服务
      */
+
+    //======zipkin+sleuth======//
+    @GetMapping("/consumer/payment/zipkin")
+    public String paymentZipkin(){
+        String result = restTemplate.getForObject("http://localhost:8001" + "payment/zipkin/", String.class);
+        return result;
+    }
+    /*
+    访问http://localhost:8001/consumer/payment/zipkin
+    和http://localhost:8001/payment/zipkin，
+    之后访问http://localhost:9411可看到服务链路。
+     */
 }
