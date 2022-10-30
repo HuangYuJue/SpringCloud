@@ -1,0 +1,20 @@
+server:
+  port: 6002
+
+spring:
+  #微服务的名字
+  application:
+    name: nacos-payment-provider
+  cloud:
+    # 注册到8848(Nacos服务发现注册中心)
+    nacos:
+      discovery:
+        # 配置Nacos地址
+        server-addr: localhost:8848
+
+#将要监控的东西暴露出来(监控的端点全部打开)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
