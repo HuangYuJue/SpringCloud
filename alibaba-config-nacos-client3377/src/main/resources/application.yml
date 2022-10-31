@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: dev # dev表示开发环境，test表测试环境
+
+###bootstrap.yml与application.yml组合一起表示在8848上查找一个后缀名为yaml且在开发环境dev中

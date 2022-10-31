@@ -1,0 +1,28 @@
+server:
+  port: 3377
+
+spring:
+  application:
+    name: nacos-config-client
+  cloud:
+    #配置discovery服务注册中心和config服务配置中心
+    nacos:
+      # 将nacos-config-client注册进8848nacos服务发现
+      discovery:
+        server-addr: localhost:8848 # Nacos服务注册中心地址
+
+      # 将3377注册进8848nacos配置中心并在配置中心查找yaml文件
+      config:
+        # 将nacos-config-client注册进8848nacos配置中心
+        server-addr: localhost:8848 # Nacos作为配置中心地址
+        # 指定3377客户端可以去读取8848配置中心的yaml文件
+        file-extension: yaml  #指定yaml格式的配置
+
+###bootstrap.yml与application.yml组合一起表示在8848上查找一个后缀名为yaml且开发环境在dev中
+
+# ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
+## 步骤：在nacos页面中的配置管理下的配置列表找到创建配置，设置DataID为nacos-config-client-dev.yaml；配置格式为YAML；并在配置内容中输入要配置的内容(表示yaml文件的内容)。
+## 在NacosSpringCloud中，dataId的完整格式如下：${prefix}-${spring.profile.active}.${file-extension}
+## ①prefix：默认为spring.application.name的值，也可以通过配置项spring.cloud.nacos.config.profix来配置；
+## ②spring.profile.active：为当前环境对应的profile，注意当spring.profile.active为空时，对应的连接符-也将不存在，dataId的拼接格式为：${prefix}.${file-extension}
+## ③file-extension：为配置内容的数据格式，可以通过配置项spring.cloud.nacos.config.file-extension来配置，目前只支持properties和yaml类型。
