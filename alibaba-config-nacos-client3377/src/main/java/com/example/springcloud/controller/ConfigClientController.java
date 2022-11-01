@@ -15,6 +15,7 @@ public class ConfigClientController {
     @GetMapping("/config/info")
     public String getConfigInfo(){
         return configInfo;
+        //nacos config center,nacos-config-client-dev.yaml,version = 1,namespace = '2c2546e3-7ac5-4723-bd5d-68397716d9ca',group = 'GROUPA'
     }
 
 }

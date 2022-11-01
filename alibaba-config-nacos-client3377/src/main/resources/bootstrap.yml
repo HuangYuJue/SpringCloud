@@ -18,9 +18,9 @@ spring:
         # 指定3377客户端可以去读取8848配置中心的yaml文件
         file-extension: yaml  #指定yaml格式的配置
         # 通过Group实现环境区分，就是找8848中定义分组group下的yaml的文件
-        #group: DEFAULT_GROUP
+        group: GROUPA
         # 通过namespace命名空间来区分，定义命名空间ID
-        #namespace: 2c2546e3-7ac5-4723-bd5d-68397716d9ca #填写命名空间的ID
+        namespace: 2c2546e3-7ac5-4723-bd5d-68397716d9ca #填写命名空间的ID
 
 ###bootstrap.yml与application.yml组合一起表示在8848上查找一个后缀名为yaml且开发环境在dev中
 
